@@ -11,8 +11,12 @@ Route::get('/', function () {
 // });
 
 Route::controller(AuthenController::class)->group(function () {
-    Route::get('/registration', [AuthenController::class, 'registration'])->middleware('alreadyLoggedIn');
-    Route::post('/registration-user', [AuthenController::class, 'registerUser'])->name('register-user');
+    Route::get('/registrationSiswa', [AuthenController::class, 'registrationSiswa'])->middleware('alreadyLoggedIn');
+    Route::post('/registration-userSiswa', [AuthenController::class, 'registerUserSiswa'])->name('register-userSiswa');
+    Route::get('/registrationDudi', [AuthenController::class, 'registrationDudi'])->middleware('alreadyLoggedIn');
+    Route::post('/registration-userDudi', [AuthenController::class, 'registerUserDudi'])->name('register-userDudi');
+    Route::get('/registrationAdmin', [AuthenController::class, 'registrationAdmin'])->middleware('alreadyLoggedIn');
+    Route::post('/registration-userAdmin', [AuthenController::class, 'registerUserAdmin'])->name('register-userAdmin');
     Route::get('/login', [AuthenController::class, 'login'])->middleware('alreadyLoggedIn');
     Route::post('/login-user', [AuthenController::class, 'loginUser'])->name('login-user');
     Route::get('/dashboard', [AuthenController::class, 'dashboard'])->middleware('isLoggedIn');

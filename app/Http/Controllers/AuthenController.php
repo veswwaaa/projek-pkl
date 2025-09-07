@@ -3,6 +3,8 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use App\Models\tb_siswa;
+use App\Models\tb_admin;
+use App\Models\tb_dudi;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Session;
 
@@ -11,11 +13,11 @@ use Illuminate\Http\Request;
 class AuthenController extends Controller
 {
     //Registration
-    public function registration()
+    public function registrationSiswa()
     {
-        return view('auth.registration');
+        return view('auth.registrationSiswa');
     }
-    public function registerUser(Request $request)
+    public function registerUserSiswa(Request $request)
     {
         // $request->validate([
         //     'name'=>'required',
@@ -50,6 +52,84 @@ class AuthenController extends Controller
             return back()->with('fail','Something wrong!');
         }
     }
+    public function registrationDudi()
+    {
+        return view('auth.registrationDudi');
+    }
+    public function registerUserDudi(Request $request)
+    {
+        // $request->validate([
+        //     'name'=>'required',
+        //     'email'=>'required|email:users',
+        //     'password'=>'required|min:8|max:12'
+        // ]);
+
+        $siswa = new tb_siswa();
+        $siswa->nis = $request->nis;
+        $siswa->nama = $request->nama;
+        $siswa->kelas = $request->kelas;
+        $siswa->jenis_kelamin = $request->jenis_kelamin;
+        $siswa->angkatan = $request->angkatan;
+        $siswa->jurusan = $request->jurusan;
+        $siswa->save();
+        
+
+         $user = new User();
+         $user->username = $siswa->nis;
+         $user->password = $request->password;
+         $user->role = 'siswa';
+         $user->id_admin = null;
+         $user->id_dudi =null;
+         $user->id_siswa = $siswa->id;
+
+
+
+        $result = $user->save();
+        if($result){
+            return back()->with('success','You have registered successfully.');
+        } else {
+            return back()->with('fail','Something wrong!');
+        }
+    }
+    public function registrationAdmin()
+    {
+        return view('auth.registrationAdmin');
+    }
+    public function registerUserAdmin(Request $request)
+    {
+        // $request->validate([
+        //     'name'=>'required',
+        //     'email'=>'required|email:users',
+        //     'password'=>'required|min:8|max:12'
+        // ]);
+
+        $admin = new tb_admin();
+        $admin->nama_admin = $request->nama_admin;
+        $admin->no_telpon = $request->no_telpon;
+        $admin->alamat = $request->alamat;
+        
+        $admin->save();
+        
+
+         $user = new User();
+         $user->username = $admin->nama_admin;
+         $user->password = $request->password;
+         $user->role = 'admin';
+         $user->id_admin = $admin->id;
+         $user->id_dudi =null;
+         $user->id_siswa = null;
+
+
+
+        $result = $user->save();
+        if($result){
+            return back()->with('success','You have registered successfully.');
+        } else {
+            return back()->with('fail','Something wrong!');
+        }
+    }
+    
+    
     ////Login
     public function login()
     {

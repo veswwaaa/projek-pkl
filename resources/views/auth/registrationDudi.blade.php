@@ -11,7 +11,7 @@
         <div class="row">
             <div class="col-md-col-md-offset-4">
                 <h2>Registration</h2>
-                <form action="{{route('register-user')}}" method="post" enctype="multipart/form-data">
+                <form action="{{route('register-userDudi')}}" method="post" enctype="multipart/form-data">
                     @csrf
                     @if (Session::has('success'))
                         <div class="alert alert-success">
@@ -23,15 +23,6 @@
                         {{Session::get('fail')}}
                     </div>
                 @endif
-                    <div class="form-group">
-                        <label for="nis">NIS</label>
-                        <input type="text" name="nis" class="form-control">
-                        <span class="text-danger">
-                            @error('nis')
-                                {{$message}}
-                                @enderror
-                            </span>
-                        </div>
                         <div class="form-group">
                             <label for="nama">nama</label>
                             <input type="text" name="nama" class="form-control">
@@ -42,37 +33,28 @@
                             </span>
                         </div>
                     <div class="form-group">
-                        <label for="kelas">kelas</label>
-                        <input type="text" name="kelas" class="form-control">
+                        <label for="no-telpon">no-telpon</label>
+                        <input type="text" name="no_telpon" class="form-control">
                         <span class="text-danger">
-                            @error('kelas')
+                            @error('no-telpon')
                                 {{$message}}
                             @enderror
                         </span>
                     </div>
                     <div class="form-group">
-                        <label for="jenis_kelamin">jenis kelamin</label>
-                        <input type="text" name="jenis_kelamin" class="form-control">
+                        <label for="alamat">alamat</label>
+                        <input type="text" name="alamat" class="form-control">
                         <span class="text-danger">
-                            @error('jenis_kelamin')
+                            @error('alamat')
                                 {{$message}}
                             @enderror
                         </span>
                     </div>
                     <div class="form-group">
-                        <label for="angkatan">angkatan</label>
-                        <input type="text" name="angkatan" class="form-control">
+                        <label for="person-in-charge">person-in-charge</label>
+                        <input type="text" name="person-in-charge" class="form-control">
                         <span class="text-danger">
-                            @error('angkatan')
-                                {{$message}}
-                            @enderror
-                        </span>
-                    </div>
-                    <div class="form-group">
-                        <label for="jurusan">jurusan</label>
-                        <input type="text" name="jurusan" class="form-control">
-                        <span class="text-danger">
-                            @error('jurusan')
+                            @error('person-in-charge')
                                 {{$message}}
                             @enderror
                         </span>
