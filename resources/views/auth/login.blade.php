@@ -25,10 +25,10 @@
                 @endif
 
                     <div class="form-group">
-                        <label for="email">Email</label>
-                        <input type="email" name="email" class="form-control">
+                        <label for="username">username</label>
+                        <input type="username" name="username" class="form-control">
                         <span class="text-danger">
-                            @error('email')
+                            @error('username')
                                 {{$message}}
                             @enderror
                         </span>

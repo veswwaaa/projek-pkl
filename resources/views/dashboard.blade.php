@@ -8,7 +8,7 @@
   </head>
   <body>
     <div class="container">
-        <h1>Dashboard</h1>
+        <h1>Dashboard SISWA</h1>
         <table class="table table-striped">
             <thead>
                 <th>Name</th>

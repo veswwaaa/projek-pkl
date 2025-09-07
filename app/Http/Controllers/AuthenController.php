@@ -30,15 +30,20 @@ class AuthenController extends Controller
         $siswa->jenis_kelamin = $request->jenis_kelamin;
         $siswa->angkatan = $request->angkatan;
         $siswa->jurusan = $request->jurusan;
+        $siswa->save();
         
 
-        // $user = new User();
-        // $user->name = $request->name;
-        // $user->email = $request->email;
-        // $user->password = $request->password;
+         $user = new User();
+         $user->username = $siswa->nis;
+         $user->password = $request->password;
+         $user->role = 'siswa';
+         $user->id_admin = null;
+         $user->id_dudi =null;
+         $user->id_siswa = $siswa->id;
 
 
-        $result = $siswa->save();
+
+        $result = $user->save();
         if($result){
             return back()->with('success','You have registered successfully.');
         } else {
@@ -53,11 +58,11 @@ class AuthenController extends Controller
     public function loginUser(Request $request)
     {
         $request->validate([            
-            'email'=>'required|email:users',
+            'username'=>'required',
             'password'=>'required|min:8|max:12'
         ]);
 
-        $user = User::where('email','=',$request->email)->first();
+        $user = User::where('username','=',$request->username)->first();
         if($user){
             if(Hash::check($request->password, $user->password)){
                 $request->session()->put('loginId', $user->id);
