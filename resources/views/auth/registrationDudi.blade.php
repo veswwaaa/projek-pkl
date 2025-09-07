@@ -25,7 +25,7 @@
                 @endif
                         <div class="form-group">
                             <label for="nama">nama</label>
-                            <input type="text" name="nama" class="form-control">
+                            <input type="text" name="nama_dudi" class="form-control">
                             <span class="text-danger">
                                 @error('nama')
                                     {{$message}}
@@ -34,7 +34,7 @@
                         </div>
                     <div class="form-group">
                         <label for="no-telpon">no-telpon</label>
-                        <input type="text" name="no_telpon" class="form-control">
+                        <input type="text" name="nomor_telpon" class="form-control">
                         <span class="text-danger">
                             @error('no-telpon')
                                 {{$message}}
@@ -52,7 +52,7 @@
                     </div>
                     <div class="form-group">
                         <label for="person-in-charge">person-in-charge</label>
-                        <input type="text" name="person-in-charge" class="form-control">
+                        <input type="text" name="person_in_charge" class="form-control">
                         <span class="text-danger">
                             @error('person-in-charge')
                                 {{$message}}

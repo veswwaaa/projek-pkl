@@ -58,29 +58,26 @@ class AuthenController extends Controller
     }
     public function registerUserDudi(Request $request)
     {
-        // $request->validate([
-        //     'name'=>'required',
-        //     'email'=>'required|email:users',
-        //     'password'=>'required|min:8|max:12'
-        // ]);
+         $request->validate([
+             'password'=>'required|min:8|max:12'
+         ]);
 
-        $siswa = new tb_siswa();
-        $siswa->nis = $request->nis;
-        $siswa->nama = $request->nama;
-        $siswa->kelas = $request->kelas;
-        $siswa->jenis_kelamin = $request->jenis_kelamin;
-        $siswa->angkatan = $request->angkatan;
-        $siswa->jurusan = $request->jurusan;
-        $siswa->save();
+        $dudi = new tb_dudi();
+        $dudi->nama_dudi = $request->nama_dudi;
+        $dudi->nomor_telpon = $request->nomor_telpon;
+        $dudi->alamat = $request->alamat;
+        $dudi->person_in_charge = $request->person_in_charge;
+
+        $dudi->save();
         
 
          $user = new User();
-         $user->username = $siswa->nis;
+         $user->username = $dudi->nama_dudi;
          $user->password = $request->password;
-         $user->role = 'siswa';
+         $user->role = 'dudi';
          $user->id_admin = null;
-         $user->id_dudi =null;
-         $user->id_siswa = $siswa->id;
+         $user->id_dudi = $dudi->id;
+         $user->id_siswa = null;
 
 
 
@@ -97,11 +94,9 @@ class AuthenController extends Controller
     }
     public function registerUserAdmin(Request $request)
     {
-        // $request->validate([
-        //     'name'=>'required',
-        //     'email'=>'required|email:users',
-        //     'password'=>'required|min:8|max:12'
-        // ]);
+        $request->validate([
+            'password'=>'required|min:8|max:12'
+        ]);
 
         $admin = new tb_admin();
         $admin->nama_admin = $request->nama_admin;
@@ -146,6 +141,7 @@ class AuthenController extends Controller
         if($user){
             if(Hash::check($request->password, $user->password)){
                 $request->session()->put('loginId', $user->id);
+                $request->session()->put('role', $user->role);
                 return redirect('dashboard');
             } else {
                 return back()->with('fail','Password not match!');
@@ -158,11 +154,32 @@ class AuthenController extends Controller
     public function dashboard()
     {
         // return "Welcome to your dashabord.";
-        $data = array();
+        $data = null;
+        $role = null;
         if(Session::has('loginId')){
-            $data = User::where('id','=',Session::get('loginId'))->first();
+            $user = User::where('id', Session::get('loginId'))->first();
+            if ($user) {
+                $role = $user->role;
+                if ($role === 'siswa' && $user->id_siswa) {
+                    $data = tb_siswa::find($user->id_siswa);
+                } elseif ($role === 'admin' && $user->id_admin) {
+                    $data = tb_admin::find($user->id_admin);
+                } elseif ($role === 'dudi' && $user->id_dudi) {
+                    $data = tb_dudi::find($user->id_dudi);
+                } else {
+                    $data = $user;
+                }
+            }
         }
-        return view('dashboard',compact('data'));
+        if ($role === 'siswa') {
+            return view('dashboardSiswa', compact('data'));
+        } elseif ($role === 'admin') {
+            return view('dashboardAdmin', compact('data'));
+        } elseif ($role === 'dudi') {
+            return view('dashboardDudi', compact('data'));
+        } else {
+            return view('dashboard', compact('data', 'role'));
+        }
     }
     ///Logout
     public function logout()
