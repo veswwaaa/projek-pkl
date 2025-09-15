@@ -47,9 +47,9 @@ class AuthenController extends Controller
 
         $result = $user->save();
         if($result){
-            return back()->with('success','You have registered successfully.');
+            return back()->with('success','Registered successfully.');
         } else {
-            return back()->with('fail','Something wrong!');
+            return back()->with('fail','Something went wrong!');
         }
     }
     public function registrationDudi()
@@ -83,9 +83,9 @@ class AuthenController extends Controller
 
         $result = $user->save();
         if($result){
-            return back()->with('success','You have registered successfully.');
+            return back()->with('success','Registered successfully.');
         } else {
-            return back()->with('fail','Something wrong!');
+            return back()->with('fail','Something went wrong.');
         }
     }
     public function registrationAdmin()
@@ -118,9 +118,9 @@ class AuthenController extends Controller
 
         $result = $user->save();
         if($result){
-            return back()->with('success','You have registered successfully.');
+            return back()->with('success','Registered successfully.');
         } else {
-            return back()->with('fail','Something wrong!');
+            return back()->with('fail','Something went wrong!');
         }
     }
     
@@ -144,10 +144,10 @@ class AuthenController extends Controller
                 $request->session()->put('role', $user->role);
                 return redirect('dashboard');
             } else {
-                return back()->with('fail','Password not match!');
+                return back()->with('fail','Password does not match!');
             }
         } else {
-            return back()->with('fail','This email is not register.');
+            return back()->with('fail','This email is not registered.');
         }        
     }
     //// Dashboard
