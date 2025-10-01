@@ -10,6 +10,7 @@
   <body>
     <div class="container">
         <h1>Dashboard SISWA </h1>
+        <h2>hello</h2>
         
       <div class="bg-blue-500 text-white p-4 rounded-lg shadow-lg max-w-sm mx-auto mt-10">
         <h1 class="text-2xl font-bold">Halo, world! 👋</h1>
