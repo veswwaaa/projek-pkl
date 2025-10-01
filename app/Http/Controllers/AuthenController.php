@@ -134,7 +134,7 @@ class AuthenController extends Controller
     {
         $request->validate([            
             'username'=>'required',
-            'password'=>'required|min:8|max:12'
+            'password'=>'required|min:8|max:20'
         ]);
 
         $user = User::where('username','=',$request->username)->first();
